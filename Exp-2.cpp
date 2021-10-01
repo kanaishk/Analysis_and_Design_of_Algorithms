@@ -10,9 +10,6 @@ sorting algorithms. It will show time result for best, worst and average case.
 using namespace std;
 using namespace std::chrono;
 
-int* bestarr(int n);
-int* worstarr(int n);
-int* averagearr(int n);
 void swap(int *xp, int *yp);
 int partition(int arr[], int low, int high);
 void quicksort(int arr[], int low, int high);
@@ -25,6 +22,48 @@ class complexity
         double best;
         double worst;
         double average;
+        int* bestarr(int n)
+        {
+            int* arr=new int[n];
+            if(!arr)
+            {
+                cout << "Cannot initialize memory";
+                return NULL;
+            }
+            for(int i=0; i<n; i++)
+            {
+                arr[i]=i;
+            }
+            return arr;
+        }
+        int* worstarr(int n)
+        {
+            int* arr=new int[n];
+            if(!arr)
+            {
+                cout << "Cannot initialize memory";
+                return NULL;
+            }
+            for(int i=0; i<n; i++)
+            {
+                arr[i]=n-i;
+            }
+            return arr;
+        }
+        int* averagearr(int n)
+        {
+            int* arr=new int[n];
+            if(!arr)
+            {
+                cout << "Cannot initialize memory";
+                return NULL;
+            }
+            for(int i=0; i<n; i++)
+            {
+                arr[i]=rand()%n;
+            }
+            return arr;
+        }
         double return_dur(int* arr, int n, char ch)
         {
             // Get starting timepoint
@@ -119,51 +158,6 @@ int main()
         system("pause");
     }while(ch!=2);
     return 0;
-}
-
-int* bestarr(int n)
-{
-    int* arr=new int[n];
-    if(!arr)
-    {
-        cout << "Cannot initialize memory";
-        return NULL;
-    }
-    for(int i=0; i<n; i++)
-    {
-        arr[i]=i;
-    }
-    return arr;
-}
-
-int* worstarr(int n)
-{
-    int* arr=new int[n];
-    if(!arr)
-    {
-        cout << "Cannot initialize memory";
-        return NULL;
-    }
-    for(int i=0; i<n; i++)
-    {
-        arr[i]=n-i;
-    }
-    return arr;
-}
-
-int* averagearr(int n)
-{
-    int* arr=new int[n];
-    if(!arr)
-    {
-        cout << "Cannot initialize memory";
-        return NULL;
-    }
-    for(int i=0; i<n; i++)
-    {
-        arr[i]=rand()%n;
-    }
-    return arr;
 }
 
 void swap(int *xp, int *yp)
