@@ -18,6 +18,9 @@ int partition(int arr[], int low, int high);
 void quicksort(int arr[], int low, int high);
 void merge(int array[], int const left, int const mid, int const right);
 void mergesort(int array[], int const begin, int const end);
+int getMax(int arr[], int n);
+void countSort(int arr[], int n, int exp);
+void radixsort(int arr[], int n);
 void sortfunc(int arr[], int n, char ch='b');
 
 class complexity
@@ -138,7 +141,7 @@ class complexity
 int main()
 {
     complexity c1(1000), c2(5000), c3(10000), c4(20000);
-    int ch=6;
+    int ch=7;
     do
     {
         system("cls");
@@ -149,8 +152,9 @@ int main()
         cout << " 3. Selection Sort\n";
         cout << " 4. Quick Sort\n";
         cout << " 5. Merge Sort\n";
-        cout << " 6. Exit\n";
-        cout << "Enter your choice(1-6): ";
+        cout << " 6. Radix Sort\n";
+        cout << " 7. Exit\n";
+        cout << "Enter your choice(1-7): ";
         cin >> ch;
         system("cls");
         switch(ch)
@@ -180,12 +184,17 @@ int main()
                     c3.display('m');
                     c4.display('m');
                     break;
-            case 6: break;
+            case 6: c1.display('r');
+                    c2.display('r');
+                    c3.display('r');
+                    c4.display('r');
+                    break;
+            case 7: break;
             default:cout << "Try Again...!";
         }
         cout << "\n";
         system("pause");
-    }while(ch!=6);
+    }while(ch!=7);
     return 0;
 }
 
@@ -316,6 +325,43 @@ void mergesort(int array[], int const begin, int const end)
     merge(array, begin, mid, end);
 }
 
+int getMax(int arr[], int n)
+{
+    int mx = arr[0];
+    for (int i = 1; i < n; i++)
+        if (arr[i] > mx)
+            mx = arr[i];
+    return mx;
+}
+
+void countSort(int arr[], int n, int exp)
+{
+    int output[n];
+    int i, count[10] = { 0 };
+
+    for (i = 0; i < n; i++)
+        count[(arr[i] / exp) % 10]++;
+
+    for (i = 1; i < 10; i++)
+        count[i] += count[i - 1];
+
+    for (i = n - 1; i >= 0; i--) {
+        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+        count[(arr[i] / exp) % 10]--;
+    }
+
+    for (i = 0; i < n; i++)
+        arr[i] = output[i];
+}
+
+void radixsort(int arr[], int n)
+{
+    int m = getMax(arr, n);
+
+    for (int exp = 1; m / exp > 0; exp *= 10)
+        countSort(arr, n, exp);
+}
+
 void sortfunc(int arr[], int n, char ch)
 {
     switch(ch)
@@ -329,6 +375,8 @@ void sortfunc(int arr[], int n, char ch)
         case 'q':   quicksort(arr,0,n-1);
                     break;
         case 'm':   mergesort(arr,0,n-1);
+                    break;
+        case 'r':   radixsort(arr,n);
                     break;
     }
 }
